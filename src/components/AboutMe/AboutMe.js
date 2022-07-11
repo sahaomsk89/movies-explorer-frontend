@@ -1,6 +1,6 @@
 import React from 'react';
 import SectionTitle from '../SectionTitle/SectionTitle';
-import photo from '../../images/meAvatar.JPG';
+import photo from '../../images/meAvatar.jpg';
 import './AboutMe.css';
 function AboutMe() {
   return (
