@@ -1,0 +1,129 @@
+.student {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  padding: 110px 0 100px;
+}
+
+.student__container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 66px;
+}
+
+.student__content {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.student__title {
+  font-family: 'Inter';
+  font-weight: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+  margin: 0;
+  color: #000000;
+}
+
+.student__subtitle {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  color: #000000;
+  margin: 18px 0 20px 0;
+}
+
+.student__text {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #000000;
+  margin: 0 0 65px 0;
+}
+
+.student__list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.student__list-item {
+  margin-right: 20px;
+}
+
+.student__list-link {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+  text-decoration: none;
+}
+
+.student__list-link:hover {
+  opacity: 0.5;
+}
+
+
+.student__photo {
+  width: 270px;
+  height: 327px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .student__title {
+    font-size: 40px;
+    line-height: 40px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .student__text {
+    font-size: 12px;
+    line-height: 18px;
+    margin: 0 40px 85px 0;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .student__container {
+    flex-direction: column-reverse;
+    margin-top: 60px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .student__title {
+    font-size: 30px;
+    line-height: 36px;
+    margin-top: 40px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .student__subtitle {
+    font-size: 11px;
+    line-height: 16px;
+  }
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .student__text {
+    font-size: 11px;
+    line-height: 16px;
+    margin: 0 0 40px 0;
+  }
+}
