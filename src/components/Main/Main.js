@@ -1,11 +1,11 @@
-import './Main.css';
-import Promo from '../Promo/Promo';
-import AboutProject from '../AboutProject/AboutProject';
-import Techs from '../Techs/Techs';
-import AboutMe from '../AboutMe/AboutMe';
-import Portfolio from '../Portfolio/Portfolio';
 import React from 'react';
-function Main() {
+import AboutMe from '../AboutMe/AboutMe';
+import AboutProject from '../AboutProject/AboutProject';
+import Portfolio from '../Portfolio/Portfolio';
+import Promo from '../Promo/Promo';
+import Techs from '../Techs/Techs';
+
+function Main({ loggedIn }) {
   return (
     <main className="main">
       <Promo />

@@ -5,7 +5,6 @@ function FilmsMenu() {
   return (
     <ul className="films__menu">
       <li className="films__menu-item">
-        <Link to="/" className="header__logo"></Link>
         <Link to="/movies" className="navigation__menu">
           Фильмы
         </Link>

@@ -78,6 +78,11 @@
   margin: 0;
 }
 
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .techs {
+    background-color: #ffff;
+  }
+}
 
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   .techs__list {

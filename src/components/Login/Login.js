@@ -1,78 +1,85 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useFormWithValidation } from '../../utils/useForm';
 import SectionForm from '../SectionForm/SectionForm';
 import './Login.css';
 
-const Login = (props) => {
-  const [inputs, setInputs] = useState({
-    email: '',
-    password: '',
-  });
+function Login({ onLogin, badRequest }) {
+  const { values, handleChange, errors, setValues, isValid } =
+    useFormWithValidation();
+  const [disabled, setDisabled] = useState(true);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInputs((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  useEffect(() => {
+    setValues(values);
+  }, [setValues, values]);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const disabled = !isValid;
+    setDisabled(disabled);
+  }, [isValid]);
+
+  const submitButtonClassName = `${
+    disabled
+      ? 'section-form__button   section-form__button_disabled'
+      : 'section-form__button'
+  }`;
+
+  function handleSubmit(e) {
     e.preventDefault();
-    if (!inputs.email || !inputs.password) {
+    if (!values.password || !values.email) {
       return;
     }
-
-    props.handleLogin(inputs.email, inputs.password);
-  };
+    onLogin(values);
+    setValues(values);
+  }
 
   return (
     <SectionForm
       title={'Рады видеть!'}
       name={'authorization'}
-      onSubmit={handleSubmit}
+      buttonText="Войти"
+      text="Ещё не зарегистрированы?"
+      url="sign-up"
+      ankor="Регистрация"
+      handleSubmit={handleSubmit}
+      submitButtonClassName={submitButtonClassName}
+      badRequest={badRequest}
     >
       <label className="section-form__label">E-mail</label>
       <input
         type="email"
         placeholder="Email"
-        value={inputs.email || ''}
+        value={values.email || ''}
         onChange={handleChange}
-        className="section-form__input section-form__input_authorization section-form__input_name"
+        className="section-form__input section-form__input_authorization"
         id="email"
         name="email"
-        minLength="2"
+        minLength="3"
         maxLength="40"
-        require="true"
+        required
+        autoComplete="on"
       />
-      <span className="input-name-error section-form__error"></span>
+      <span className="input-name-error section-form__error">
+        {errors.email || ''}
+      </span>
+
       <label className="section-form__label">Пароль</label>
       <input
         type="password"
         placeholder="Пароль"
-        value={inputs.password || ''}
+        value={values.password || ''}
         onChange={handleChange}
-        className="section-form__input section-form__input_authorization section-form__input_job"
+        className="section-form__input section-form__input_authorization"
         id="password"
         name="password"
-        minLength="2"
-        maxLength="200"
-        require="true"
+        minLength="5"
+        maxLength="50"
+        required
       />
-      <span className="input-job-error section-form__error"></span>
-      <button
-        className={`section-form__button section-form__button_authorization`}
-        type="submit"
-      >
-        {' '}
-        {`Войти`}{' '}
-      </button>
-      <p className="section-form__text">Ещё не зарегистрированы?</p>
-      <Link to="/sign-up" className="section__link">
-        Регистрация
-      </Link>
+      <span className="input-job-error section-form__error">
+        {errors.password || ''}
+      </span>
     </SectionForm>
   );
-};
+}
 
 export default Login;

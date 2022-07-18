@@ -1,8 +1,9 @@
 import React from 'react';
 import MobileMenu from '../MobileMenu/MobileMenu';
 import FilmsMenu from '../FilmsMenu/FilmsMenu';
+
 import './Navigation.css';
-function Navigation({ windowWidth }) {
+function Navigation() {
   const [isMobileMenuOpened, setIsMobileMenuOpened] = React.useState(false);
 
   function handleMenuClick() {

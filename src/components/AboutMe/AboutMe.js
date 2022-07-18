@@ -25,6 +25,7 @@ function AboutMe() {
                 className="student__list-link"
                 href="https://github.com/sahaomsk89"
                 target="_blank"
+                rel="noreferrer"
               >
                 Github
               </a>
@@ -34,6 +35,7 @@ function AboutMe() {
                 className="student__list-link"
                 href="https://vk.com/alex.ustinov1"
                 target="_blank"
+                rel="noreferrer"
               >
                 Вконтакте
               </a>
