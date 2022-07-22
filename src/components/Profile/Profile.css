@@ -81,6 +81,15 @@
   color: #FF3055;
 }
 
+.profile__menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .profile__submit-button {
   padding: 0;
   font-style: normal;
@@ -91,6 +100,10 @@
   color: #000000;
   border: none;
   margin-bottom: 16px;
+}
+
+.profile__submit-button:hover {
+  opacity: 0.5;
 }
 
 .profile__submit-button_disabled {
@@ -139,14 +152,4 @@
   .profile__title {
     margin-bottom: 64px;
   }
-}
-
-
-.profile__menu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
