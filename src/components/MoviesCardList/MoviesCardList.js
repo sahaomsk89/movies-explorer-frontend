@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import { useWindowSize } from '../useWindowsSize/useWindowsSize';
+import { useWindowSize } from '../../utils/useWindowsSize';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import MoreButton from '../MoreButton/MoreButton';
 import './MoviesCardList.css';
@@ -54,10 +54,10 @@ function MoviesCardList({
   return (
     <>
       <section className="cards" name="movies-cards">
-        {movies.slice(0, initialCards).map((movie, i) => {
+        {movies.slice(0, initialCards).map((movie) => {
           return (
             <MoviesCard
-              key={i}
+              key={movie.id}
               movie={movie}
               savedMovies={savedMovies}
               handleSaveMovie={handleSaveMovie}

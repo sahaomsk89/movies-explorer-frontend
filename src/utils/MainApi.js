@@ -1,6 +1,6 @@
 import { MAIN_API_URL } from './constants';
 
-const getResponse = (res) => {
+export const getResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 };
 export const register = (name, email, password) => {
@@ -49,7 +49,6 @@ export const changeUserInfo = ({ name, email }) => {
       authorization: `Bearer ${localStorage.getItem('jwt')}`,
       'Content-Type': 'application/json',
     },
-
     body: JSON.stringify({
       name,
       email,

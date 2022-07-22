@@ -5,55 +5,36 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 import React from 'react';
 
-function Movies({
-  movies,
-  onSearch,
-  preloader,
-  badRequest,
-  handleSaveMovie,
-  savedMovies,
-  isMoviesState,
-  handleCheckbox,
-  shortMoviesList,
-  handleDeleteMovie,
-}) {
-  if (badRequest && isMoviesState) {
-    return (
-      <main className="movies">
-        <SearchForm
-          onSearch={onSearch}
-          isMoviesState={isMoviesState}
-          handleCheckbox={handleCheckbox}
-          shortMoviesList={shortMoviesList}
-        />
-        <p>{badRequest}</p>
-      </main>
-    );
-  } else {
-    return (
-      <main className="movies">
-        <SearchForm
-          onSearch={onSearch}
-          isMoviesState={isMoviesState}
-          handleCheckbox={handleCheckbox}
-          shortMoviesList={shortMoviesList}
-        />
-        {preloader ? (
-          <Preloader />
+function Movies(props) {
+  return (
+    <main className="movies">
+      <SearchForm
+        onSearch={props.onSearch}
+        isMoviesState={props.isMoviesState}
+        handleCheckbox={props.handleCheckbox}
+        shortMoviesList={props.shortMoviesList}
+      />
+      {props.preloader ? (
+        <Preloader />
+      ) : props.isMoviesState ? (
+        props.movies.length > 0 ? (
+          <MoviesCardList
+            isMoviesState={props.isMoviesState}
+            movies={props.movies}
+            savedMovies={props.savedMovies}
+            handleSaveMovie={props.handleSaveMovie}
+            handleDeleteMovie={props.handleDeleteMovie}
+          />
+        ) : !props.preloader ? (
+          <span>{props.badRequest}</span>
         ) : (
-          <>
-            <MoviesCardList
-              isMoviesState={isMoviesState}
-              movies={movies}
-              savedMovies={savedMovies}
-              handleSaveMovie={handleSaveMovie}
-              handleDeleteMovie={handleDeleteMovie}
-            />
-          </>
-        )}
-      </main>
-    );
-  }
+          <span>{props.errorMovies}</span>
+        )
+      ) : (
+        ''
+      )}
+    </main>
+  );
 }
 
 export default Movies;

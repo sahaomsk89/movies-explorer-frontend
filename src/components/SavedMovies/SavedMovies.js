@@ -1,22 +1,3 @@
-// import './SavedMovies.css';
-// import SearchForm from '../SearchForm/SearchForm';
-// import Preloader from '../Preloader/Preloader';
-// import MoviesCardList from '../MoviesCardList/MoviesCardList';
-// import MoviesCard from '../MoviesCard/MoviesCard';
-
-// function SavedMovies({}) {
-//   return (
-//     <main className="saved-movies">
-//       <SearchForm />
-//       {/* <Preloader /> */}
-//       <MoviesCard />
-//       <MoviesCardList />
-//     </main>
-//   );
-// }
-
-// export default SavedMovies;
-
 import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
@@ -31,40 +12,36 @@ function SavedMovies({
   savedMovies,
   handleCheckbox,
   shortMoviesList,
+  isMoviesState,
+  errorSavedMovies,
 }) {
-  if (badRequest) {
-    return (
-      <main className="saved-movies">
-        <SearchForm
-          onSearchSaved={onSearchSaved}
-          isMoviesState={false}
-          handleCheckbox={handleCheckbox}
-          shortMoviesList={shortMoviesList}
-        />
-        <p>{badRequest}</p>
-      </main>
-    );
-  } else {
-    return (
-      <main className="saved-movies">
-        <SearchForm
-          onSearchSaved={onSearchSaved}
-          isMoviesState={false}
-          handleCheckbox={handleCheckbox}
-          shortMoviesList={shortMoviesList}
-        />
-        {preloader ? (
-          <Preloader />
-        ) : (
+  return (
+    <main className="saved-movies">
+      <SearchForm
+        onSearchSaved={onSearchSaved}
+        isMoviesState={false}
+        handleCheckbox={handleCheckbox}
+        shortMoviesList={shortMoviesList}
+      />
+      {preloader ? (
+        <Preloader />
+      ) : isMoviesState ? (
+        movies.length > 0 ? (
           <MoviesCardList
             movies={movies}
             savedMovies={savedMovies}
             handleDeleteMovie={handleDeleteMovie}
           />
-        )}
-      </main>
-    );
-  }
+        ) : !preloader ? (
+          <span>{badRequest}</span>
+        ) : (
+          <span>{errorSavedMovies}</span>
+        )
+      ) : (
+        ''
+      )}
+    </main>
+  );
 }
 
 export default SavedMovies;

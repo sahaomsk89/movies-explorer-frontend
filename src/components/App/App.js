@@ -119,6 +119,7 @@ function App() {
     setLoggedIn(false);
     localStorage.removeItem('jwt');
     localStorage.removeItem('loggedIn');
+    localStorage.clear();
     history.push('/');
   }
 
@@ -177,6 +178,7 @@ function App() {
 
   function handleSearchSubmit(searchWord) {
     launchPreloader();
+
     getMovies()
       .then((res) => {
         const moviesList = res.map((movie) => {

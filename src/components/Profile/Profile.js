@@ -2,110 +2,145 @@ import './Profile.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useFormWithValidation } from '../../utils/useForm';
 import { useContext, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
 function Profile({ onUpdateUser, onSignOut, message }) {
+  const [isEditActive, setIsEditActive] = useState(false);
+  const [isSubmitButtonActive, setIsSubmitButtonActive] = useState(false);
+  const { values, errors, isValid, handleChange } = useFormWithValidation();
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, setValues, isValid } =
-    useFormWithValidation();
-  const [disabled, setDisabled] = useState(true);
+  const location = useLocation().pathname;
 
-  useEffect(() => {
-    if (currentUser) {
-      setValues({
-        name: currentUser.name,
-        email: currentUser.email,
-      });
-    }
-  }, [currentUser, setValues]);
-
-  useEffect(() => {
-    const disabled = !isValid;
-    setDisabled(disabled);
-  }, [isValid]);
-
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleSubmit(evt) {
+    evt.preventDefault();
     onUpdateUser({
-      name: values.name || currentUser.name,
-      email: values.email || currentUser.email,
+      name: values.name,
+      email: values.email,
     });
+    setIsEditActive(false);
   }
 
-  const submitButtonClassName = `${
-    disabled
-      ? 'profile__submit-button profile__submit-button_disabled'
-      : 'profile__submit-button profile__submit-button_edit hover-effect'
-  }`;
-
-  function signOut() {
-    onSignOut();
-    localStorage.removeItem('jwt');
+  function editProfile() {
+    setIsEditActive(true);
   }
+
+  function checkNameInput(evt) {
+    handleChange(evt);
+    if (evt.target.value !== currentUser.name) {
+      setIsSubmitButtonActive(true);
+    } else {
+      setIsSubmitButtonActive(false);
+    }
+  }
+
+  function checkEmailInput(evt) {
+    handleChange(evt);
+    if (evt.target.value !== currentUser.email) {
+      setIsSubmitButtonActive(true);
+    } else {
+      setIsSubmitButtonActive(false);
+    }
+  }
+
+  useEffect(() => {
+    values.name = currentUser.name;
+    values.email = currentUser.email;
+  }, [currentUser]);
 
   return (
     <main className="profile">
       <form
         className="profile__container"
         name="profile"
-        noValidate
+        id="profile"
         onSubmit={handleSubmit}
+        noValidate
       >
-        <h1 className="profile__title">
-          {`Привет, ${values.name || currentUser.name}`}
-        </h1>
-        <fieldset className="profile__fieldset">
-          <label className="profile__label">
+        <h1 className="profile__title">Привет, {currentUser.name}!</h1>
+        <div className="profile__fieldset">
+          <label className="profile__label" htmlFor="user__name">
             <span className="profile__text">Имя</span>
+
             <input
-              name="name"
-              type="text"
               className="profile__input"
-              required
-              minLength="2"
-              maxLength="30"
-              id="name-input"
-              autoComplete="on"
+              type="text"
+              id="user__name"
+              name="name"
+              disabled={!isEditActive && true}
+              minLength="1"
+              maxLength="40"
+              onChange={checkNameInput}
               value={values.name || currentUser.name}
-              onChange={handleChange}
+              required
             />
           </label>
-          <span className="profile__input-error" id="name-input-error">
+          <span className="profile__input-error" id="user__name-error">
             {errors.name || ''}
           </span>
-          <label className="profile__label">
+
+          <label className="profile__label" htmlFor="user__email">
             <span className="profile__text">E-mail</span>
             <input
-              name="email"
-              type="email"
               className="profile__input"
-              required
-              minLength="5"
-              maxLength="40"
-              id="email-input"
-              autoComplete="on"
+              type="email"
+              id="user__email"
+              name="email"
+              disabled={!isEditActive && true}
+              onChange={checkEmailInput}
               value={values.email || currentUser.email}
+              required
             />
           </label>
-          <span className="profile__input-error" id="email-input-error">
+          <span className="profile__input-error" id="user__email-error">
             {errors.email || ''}
           </span>
-        </fieldset>
+        </div>
         <span className="profile__input-error">{message}</span>
-
-        <button
-          type="submit"
-          disabled={disabled}
-          className={submitButtonClassName}
-        >
-          Редактировать
-        </button>
-
-        <button
-          type="submit"
-          className="profile__submit-button profile__submit-button_signout"
-          onClick={signOut}
-        >
-          Выйти из аккаунта
-        </button>
+        {isEditActive ? (
+          location === '/profile' ? (
+            <button
+              className={`profile__submit-button ${
+                (!isValid || !isSubmitButtonActive) &&
+                'profile__submit-button_disabled'
+              }`}
+              type="submit"
+              disabled={(!isValid || !isSubmitButtonActive) && true}
+            >
+              Сохранить
+            </button>
+          ) : (
+            <button
+              className={`profile__submit-button ${
+                !isValid && 'profile__submit-button_disabled'
+              }`}
+              type="submit"
+              disabled={!isValid && true}
+            >
+              Редактировать
+            </button>
+          )
+        ) : (
+          <ul className="profile__menu">
+            <li className="profile__menu-item">
+              <button
+                className="profile__submit-button"
+                type="button"
+                onClick={editProfile}
+              >
+                Редактировать
+              </button>
+            </li>
+            <li className="profile__menu-item">
+              <button
+                className="profile__submit-button profile__submit-button_signout"
+                type="button"
+                onClick={onSignOut}
+              >
+                Выйти из аккаунта
+              </button>
+            </li>
+          </ul>
+        )}
       </form>
     </main>
   );

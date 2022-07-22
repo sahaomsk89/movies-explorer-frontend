@@ -1,26 +1,34 @@
-import { React, useState, useEffect } from 'react';
-import searchIcon from '../../images/icon__search.svg';
-import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import { useFormWithValidation } from '../../utils/useForm';
 
+import React from 'react';
+import searchIcon from '../../images/icon__search.svg';
+import './SearchForm.css';
 function SearchForm({
   onSearch,
   onSearchSaved,
   isMoviesState,
-  onChange,
   shortMoviesList,
   handleCheckbox,
 }) {
-  const { values, handleChange, isValid } = useFormWithValidation();
-  const [disabled, setDisabled] = useState(true);
+  const {
+    keyword,
+    setKeyword,
+    values,
+    handleChange,
+    setValues,
+    isValid,
+    setIsValid,
+  } = useFormWithValidation();
+
+  const [disabled, setDisabled] = React.useState(true);
   const submitButtonClassName = `${
     disabled
       ? 'search__button search__button_disabled'
       : 'search__button hover-effect'
   }`;
 
-  useEffect(() => {
+  React.useEffect(() => {
     const disabled = !isValid;
     setDisabled(disabled);
   }, [isValid]);
@@ -28,18 +36,29 @@ function SearchForm({
   function handleSubmit(e) {
     e.preventDefault();
     onSearch(values.search);
+    localStorage.setItem('keyword', keyword);
   }
 
   function handleSubmitSaved(e) {
     e.preventDefault();
     onSearchSaved(values.search);
+    localStorage.setItem('keyword', keyword);
   }
+
+  React.useEffect(() => {
+    setKeyword(localStorage.getItem('keyword'));
+  }, []);
 
   return (
     <section className="search">
       {isMoviesState ? (
         <div className="search__container">
-          <form className="search__form" onSubmit={handleSubmit} noValidate>
+          <form
+            className="search__form"
+            name="search"
+            noValidate
+            onSubmit={handleSubmit}
+          >
             <img
               className="search__icon"
               src={searchIcon}
@@ -55,9 +74,9 @@ function SearchForm({
               maxLength="40"
               required
               placeholder="Фильм"
-              autoComplete="off"
               autoFocus={true}
               onChange={handleChange}
+              value={keyword || ''}
             />
             <button
               className={submitButtonClassName}
@@ -98,6 +117,7 @@ function SearchForm({
               autoComplete="off"
               autoFocus={true}
               onChange={handleChange}
+              value={keyword || ''}
             />
             <button
               className={submitButtonClassName}

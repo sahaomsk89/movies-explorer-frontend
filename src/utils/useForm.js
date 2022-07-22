@@ -4,11 +4,13 @@ export function useFormWithValidation() {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
+  const [keyword, setKeyword] = useState('');
 
   const handleChange = (e) => {
     const input = e.target;
     const name = input.name;
     const value = input.value;
+    setKeyword(e.target.value);
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: input.validationMessage });
     setIsValid(input.closest('form').checkValidity());
@@ -24,11 +26,15 @@ export function useFormWithValidation() {
   );
 
   return {
+    keyword,
+    setKeyword,
     values,
     handleChange,
     errors,
     isValid,
     setValues,
     resetForm,
+    setErrors,
+    setIsValid,
   };
 }
