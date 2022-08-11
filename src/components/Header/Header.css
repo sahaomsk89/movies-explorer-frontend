@@ -21,6 +21,10 @@
   align-items: center;
 }
 
+.header__container_none {
+  display: none;
+}
+
 .header__menu {
   display: flex;
   align-items: center;

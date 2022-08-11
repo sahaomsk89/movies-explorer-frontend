@@ -11,6 +11,7 @@ function Portfolio() {
             className="portfolio__link"
             href="https://sahaomsk89.github.io/maket2/"
             target="_blank"
+            rel="noreferrer"
           >
             Статичный сайт
           </a>
@@ -18,6 +19,7 @@ function Portfolio() {
             className="portfolio__link"
             href="https://sahaomsk89.github.io/maket2/"
             target="_blank"
+            rel="noreferrer"
           >
             &#8599;
           </a>
@@ -27,6 +29,7 @@ function Portfolio() {
             className="portfolio__link"
             href="https://sahaomsk89.github.io/russian-travel/"
             target="_blank"
+            rel="noreferrer"
           >
             Адаптивный сайт
           </a>
@@ -34,6 +37,7 @@ function Portfolio() {
             className="portfolio__link"
             href="https://sahaomsk89.github.io/russian-travel/"
             target="_blank"
+            rel="noreferrer"
           >
             &#8599;
           </a>
@@ -43,6 +47,7 @@ function Portfolio() {
             className="portfolio__link"
             href="https://sahaomsk89.github.io/mesto/"
             target="_blank"
+            rel="noreferrer"
           >
             Одностраничное приложение
           </a>
@@ -50,6 +55,7 @@ function Portfolio() {
             className="portfolio__link"
             href="https://sahaomsk89.github.io/mesto/"
             target="_blank"
+            rel="noreferrer"
           >
             &#8599;
           </a>

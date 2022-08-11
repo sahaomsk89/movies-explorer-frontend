@@ -3,13 +3,17 @@ import { Link, Route, Switch } from 'react-router-dom';
 import './Header.css';
 import Navigation from '../Navigation/Navigation';
 
-function Header() {
+function Header({ loggedIn }) {
   return (
     <Switch>
       <Route exact path="/">
         <header className="header">
           <Link to="/" className="header__logo"></Link>
-          <div className="header__container">
+          <div
+            className={
+              !loggedIn ? 'header__container' : 'header__container_none'
+            }
+          >
             <Link to="/sign-up" className="header__menu">
               Регистрация
             </Link>
@@ -17,23 +21,19 @@ function Header() {
               Войти
             </Link>
           </div>
+          <div
+            className={`navigation ${
+              loggedIn ? 'navigation' : 'navigation__menu_none'
+            }`}
+          >
+            <Navigation loggedIn={loggedIn} />
+          </div>
         </header>
       </Route>
 
-      <Route exact path="/movies">
+      <Route exact path="/(profile|movies|saved-movies)">
         <header className="header">
-          <Navigation />
-        </header>
-      </Route>
-
-      <Route exact path="/saved-movies">
-        <header className="header">
-          <Navigation />
-        </header>
-      </Route>
-
-      <Route exact path="/profile">
-        <header className="header">
+          <Link to="/" className="header__logo"></Link>
           <Navigation />
         </header>
       </Route>

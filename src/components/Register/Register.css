@@ -10,11 +10,6 @@
   padding: 5px;
 }
 
-.section-form__input_type_error {
-  border-bottom: 1px solid #ff0000;
-  width: 83%;
-}
-
 .section-form__button_authorization {
   background: #FFFFFF;
   color: #000000;
@@ -59,14 +54,6 @@
   font-size: 12px;
   line-height: 15px;
   color: #FF3055;
-  visibility: hidden;
-  opacity: 0;
-}
-
-.section-form__error_visible {
-  visibility: visible;
-  opacity: 1;
-  margin: 0 10px;
 }
 
 .section-form__text {

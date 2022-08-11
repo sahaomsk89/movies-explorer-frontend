@@ -2,15 +2,44 @@ import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import MoviesCard from '../MoviesCard/MoviesCard';
 
-function SavedMovies({}) {
+function SavedMovies({
+  movies,
+  onSearchSaved,
+  preloader,
+  badRequest,
+  handleDeleteMovie,
+  savedMovies,
+  handleCheckbox,
+  shortMoviesList,
+  isMoviesState,
+  errorSavedMovies,
+}) {
   return (
     <main className="saved-movies">
-      <SearchForm />
-      {/* <Preloader /> */}
-      <MoviesCard />
-      <MoviesCardList />
+      <SearchForm
+        onSearchSaved={onSearchSaved}
+        isMoviesState={false}
+        handleCheckbox={handleCheckbox}
+        shortMoviesList={shortMoviesList}
+      />
+      {preloader ? (
+        <Preloader />
+      ) : isMoviesState ? (
+        movies.length > 0 ? (
+          <MoviesCardList
+            movies={movies}
+            savedMovies={savedMovies}
+            handleDeleteMovie={handleDeleteMovie}
+          />
+        ) : !preloader ? (
+          <span>{badRequest}</span>
+        ) : (
+          <span>{errorSavedMovies}</span>
+        )
+      ) : (
+        ''
+      )}
     </main>
   );
 }

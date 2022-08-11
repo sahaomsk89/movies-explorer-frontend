@@ -1,1 +1,3 @@
-# movies-explorer-frontend
+домен 
+
+ust-movies-explorer.nomoredomains.xyz

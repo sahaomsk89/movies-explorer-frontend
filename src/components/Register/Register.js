@@ -1,88 +1,102 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import SectionForm from '../SectionForm/SectionForm';
+import { useFormWithValidation } from '../../utils/useForm';
 import './Register.css';
 
-const Register = (props) => {
-  const [state, setState] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
+const Register = ({ onRegister, badRequest }) => {
+  const { values, handleChange, errors, setValues, isValid } =
+    useFormWithValidation();
+  const [disabled, setDisabled] = useState(true);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setState((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  useEffect(() => {
+    setValues(values);
+  }, [setValues, values]);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const disabled = !isValid;
+    setDisabled(disabled);
+  }, [isValid]);
+
+  const submitButtonClassName = `${
+    disabled
+      ? 'section-form__button   section-form__button_disabled'
+      : 'section-form__button'
+  }`;
+
+  function handleSubmit(e) {
     e.preventDefault();
-    let { name, email, password } = state;
-    props.handleRegister(name, email, password);
-  };
+    if (!values.password || !values.email || !values.name) {
+      return;
+    }
+
+    onRegister(values);
+    setValues(values);
+  }
 
   return (
     <SectionForm
       title={'Добро Пожаловать'}
       name={'authorization'}
-      onSubmit={handleSubmit}
+      buttonText="Зарегистрироваться"
+      text="Уже зарегистрированы?"
+      url="sign-in"
+      ankor="Войти"
+      handleSubmit={handleSubmit}
+      submitButtonClassName={submitButtonClassName}
+      badRequest={badRequest}
     >
       <label className="section-form__label">Имя</label>
       <input
         type="text"
         placeholder="Имя"
-        value={state.name || ''}
+        value={values.name || ''}
         onChange={handleChange}
-        className="section-form__input section-form__input_authorization section-form__input_name"
+        className="section-form__input section-form__input_authorization"
         id="name"
         name="name"
         minLength="2"
         maxLength="30"
-        require="true"
+        required
+        autoComplete="on"
       />
-      <span className="input-name-error section-form__error"></span>
+      <span className="section-form__error" id="name-error">
+        {errors.name || ''}
+      </span>
+
       <label className="section-form__label">E-mail</label>
       <input
         name="email"
         type="email"
         placeholder="Email"
-        value={state.email || ''}
+        value={values.email || ''}
         onChange={handleChange}
-        className="section-form__input section-form__input_authorization section-form__input_name"
+        className="section-form__input section-form__input_authorization"
         id="email"
-        minLength="2"
+        minLength="4"
         maxLength="40"
-        require="true"
+        required
+        autoComplete="on"
       />
-      <span className="input-name-error section-form__error"></span>
+      <span className="section-form__error" id="email-error">
+        {errors.email || ''}
+      </span>
 
       <label className="section-form__label">Пароль</label>
       <input
         type="password"
         placeholder="Пароль"
-        value={state.password || ''}
+        value={values.password || ''}
         onChange={handleChange}
-        className="section-form__input section-form__input_authorization section-form__input_job"
+        className="section-form__input section-form__input_authorization"
         id="password"
         name="password"
-        minLength="2"
-        maxLength="200"
-        require="true"
+        minLength="6"
+        maxLength="50"
+        required
       />
-      <span className="input-job-error section-form__error"></span>
-      <button
-        className={`section-form__button section-form__button_authorization`}
-        type="submit"
-      >
-        {`Зарегистрироваться`}
-      </button>
-      <p className="section-form__text">Уже зарегистрированы?</p>
-      <Link to="/sign-in" className="section__link">
-        Войти
-      </Link>
+      <span className="section-form__error" id="password-error">
+        {errors.password || ''}
+      </span>
     </SectionForm>
   );
 };
